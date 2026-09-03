@@ -6,7 +6,7 @@
 **Estudiante:** Christian Isaac Dzul Canul
 **Programa:** Maestría en Inteligencia Artificial 🎓
 **Docente:** Dr. Víctor Uc Cetina
-**Fecha:** `[31/08/2026]`
+**Fecha:** `31/08/2026`
 
 ---
 > ## 1. Objetivo

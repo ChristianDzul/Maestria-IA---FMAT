@@ -118,7 +118,7 @@ clonar lo de wumpus, ejecutar cada programa de wumpus, leer el README.md para la
 
 ---
 
-#### Fecha: `[28/08/2002]`
+#### Fecha: `[28/08/2026]`
 
 #### 📌 Notas y Hallazgos (Día 03):
 
@@ -132,3 +132,168 @@ Va buscando branch por branch, estado, o nodo hasta llegar al objetivo.
 > _Notas generales:_
 
 - reubicar wumpus, agujeros, etc. El tamanio del agente. Y modificar esto en el yaml, posteriormente correrlo los agentes
+
+---
+
+> ### Fecha: `[31/08/2026]`
+
+####  📌 Notas y Hallazgos (Día 04):
+
+### Problem Solving & search
+
+- Formulate a goal: e.g: Be in Bucharest.
+- Formulate problem: 
+  - states: various cities
+  - actions: drive between cities
+- Find solution: Sequence of cities, e.g., Arad, Sibiu, Fagaras, then Bucharest.
+
+Tip:
+
+  - Identificar si es realmente un problema de busqueda lo que realmente se necesita.
+  - Abstraer el problema para definir los componentes de este (estados, acciones, como almacenar los estados en el programa, etc).
+  - Funcion sucesor:para cada estado, hay puntos de acciones a ejecutar, le correspondera a un estado siguiente (transita de un estado a otro).
+
+
+Implementation: States vs Nodes
+
+![alt text](image.png)
+
+Implementation: general tree search
+
+![alt text](image-1.png)
+
+> _Notas generales:_
+
+
+---
+
+> ### Fecha: `[01/09/2026]`
+
+####  📌 Notas y Hallazgos (Día 05):
+
+### Problem Solving & search
+
+Expand function: It creates new nodes, filling in the various fields and using the SUCCESSORFN of the problem to create corresponding states.
+
+
+> Breadth-first search 
+
+-  Expand shallowest unexpanded node
+
+-Implementation:
+
+![alt text](image-2.png)
+
+
+> FIFO vs LIFO
+
+- Firs in, first out, and the other is last in, first out in the queue.
+
+> Uniform-cost Search
+
+- Expand least-cost unexpanded node
+
+- Implementation:
+
+![alt text](image-3.png)
+
+
+> Depth-first Search
+
+- Expand deepest unexpanded node:
+
+- Implementation:
+
+![alt text](image-4.png)
+
+- Ejemplo del uso de LIFO (simepre se van por una rama para ir analizando):
+
+![alt text](image-5.png)
+
+- Properties of depth-first search: 
+  - Is not complete: Fails in infinite-depth spaces, spaces with loops. Modify to avoid repeated states along path --> Complete in finite spaces
+
+  ![alt text](image-6.png)
+
+  - Not optimal
+
+> Iterative deepening search l = 0, you can use a hybrid of algorithms to avoid making a lot of interaction or limiting the limit like in this example (busqueda forzada a lo ancho):
+
+![alt text](image-8.png)
+
+- Properties:
+
+![alt text](image-9.png)
+
+> Summary of algorithms
+
+![alt text](image-10.png)
+
+Hay otro algoritmo que es el bidirectional, basicamente empezar dos busquedas en paralelo, por ejemplo de A a Z, y de Z a A.  --> Objetive <---
+
+> Best-first search:
+
+- Use an evaluation function for each node, estimate of "desirability", expand most desirable unexpanded node:
+
+- Implementation:
+
+![alt text](image-11.png)
+
+
+> Heuristics: Aproximacion o estimacion de un valor/ruta/objetivo.
+
+_Notas generales:_
+
+- Para los algoritmos se requiere considerar el costo y necesidades de lo que se quiere alcanzar, ya que algunos pueden no ser tan optimos para ciertas casisticas, o bien, pueden consumir mucha memoria, siendo contraproducente su uso.
+
+> Greedy search
+- Evalua la h(n) -- heuristic, escogiendo el nodo que mas te acercara a la meta u pbjetivo tomando en consideracion la heuristica.
+- Implementation:
+![alt text](image-12.png)
+
+- Ejemplo usando fifo ordenada o cola de prioridad:
+
+![alt text](image-13.png)
+
+![alt text](image-14.png)
+
+se van insertando, pero se ordenan de menor a mayor para encontrar el menor valor de heuristica para encontrar la mejor solucion.
+
+- Properties:
+
+![alt text](image-15.png)
+
+> A * Search:
+
+![alt text](image-16.png)
+
+- La heuristica de la meta siempre es 0 for any G.
+- Este algoritmo te garantiza a encontrar la mejor solucion, se debe seleccionar esa h para garantizar que se encuentre la mejor solucion.
+- Se van asignando valores para ir evaluando los costos y evitar entrar en loops, y de tomar las mas costosas, evaluando solo lo necesario.
+
+Example:
+
+![alt text](image-17.png)
+
+Optimal of A* (standard proof):
+
+![alt text](image-18.png)
+
+![alt text](image-20.png)
+
+
+> Proof of lemma: Consistency
+
+![alt text](image-21.png)
+
+- Admisible heuristics: 
+
+![alt text](image-22.png)
+
+- dominance
+
+![alt text](image-23.png)
+
+- relaxed problems:
+
+![alt text](image-24.png)
