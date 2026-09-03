@@ -1,7 +1,7 @@
 # Ejercicio 02 — Cambiar la ubicación del Wumpus y los pits
 
 **Materia:** Introducción a la Inteligencia Artificial
-**Unidad / Módulo:** Conceptos básicos de Inteligencia Artificial
+**Unidad / Módulo:** Agentes
 **Actividad:** Actividad
 **Estudiante:** Christian Isaac Dzul Canul
 **Programa:** Maestría en Inteligencia Artificial 🎓
@@ -113,7 +113,7 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
 
    Para concluir, para la configuración presentada en `mi_cueva_4x4.yaml`, el único agente capaz de finalizar el mapa fue el `learning agent`, mientras que el resto no, tal como lo podemos observar en las evidencias y resultados obtenidos de los demas agentes. Adicionalmente, el `Simple reflex agent` es el que peor desempeño tuvo devido a sus limitaciones y capacidades de no recordar las casillas que visitó, quedandose estancado girando a la derecha hasta llegar al máximo numero de iteraciones. Asi mismo, el `model based agent` al jugar con los pit de manera que los acerques o alejes, este adopta un comportamiento similar a cuando se encuentra con el wumpus, de manera que no se mueve en dirección de casillas que pudieran ser posiblemente riesgosas, y por lo tanto, se queda girando.
-   
+
 ---
 > ## 4. Criteria
 
