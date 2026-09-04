@@ -297,3 +297,24 @@ Optimal of A* (standard proof):
 - relaxed problems:
 
 ![alt text](image-24.png)
+
+---
+
+> ### Fecha: `[03/09/2026]`
+
+####  📌 Notas y Hallazgos (Día 06):
+
+### Problem Solving & search
+
+
+Aprendizaje supervisado.
+
+Aprendizaje no supervisado.
+
+
+## Metodos:
+
+- Regresion linear:
+
+- Clasificacion:
+
