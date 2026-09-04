@@ -316,5 +316,40 @@ Aprendizaje no supervisado.
 
 - Regresion linear:
 
-- Clasificacion:
+Un agente o modelo debe ser capaz de generalizar, esto con el fin de poder hacer predcciones mas acertadas en diferentes circunstancias. Para ello es muy importante la informacion y datos que se utilicen para entrenar al modelo.
 
+![alt text](image-25.png)
+
+Cada termino parametro, se representa como un nuevo termino, asi como se observa en la imagen con cada 0 (theta), teniendo asi hasta 3 pesos al momento de predecir el valor. Para cada termino que no sea de mucho valor o no tenga mucha correlacion con la variable que nos importe que nos pueda apoyar a predecirlo, este le asignara un peso mucho menor, asignandole valores cercanas a 0.
+
+![alt text](image-27.png)
+
+
+No tiene ordenada al cero, todas las neuronas deben tener terminos independientes de la varuable de entrada. Ya que no importa que valor se le ponga al parametro, este debe ser independiente de la viariable.
+
+A mayor terminos, mayor flexibilidad puede tener el modelo.
+
+![alt text](image-28.png)
+
+Funciones de error para metir y comparar el desempeño de los modelos, siendo la funcion de costo como:
+
+![alt text](image-30.png)
+
+Estimando parametros:
+
+- Para este ejemplo se uso un polinomio y se utilizaron valores random para los intervalos para inicializarlo
+
+![alt text](image-31.png)
+
+Se usa J para evaluar el error que se obtuvo sumando los puntos reales en contra a la prediccion y que tan lejos estuvo de este.
+
+  - Update rule:
+
+  ![alt text](image-32.png)
+
+Es recomentable usar un batch gradient descent que evalue y actualice por ejemplo mas que actualizarlo por todos los ejemplos o J
+
+   
+- Neuronas:
+
+Es un modelo lineal 

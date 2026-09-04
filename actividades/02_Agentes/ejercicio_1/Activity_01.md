@@ -2,7 +2,7 @@
 
 **Materia:** Introducción a la Inteligencia Artificial
 **Unidad / Módulo:** Agentes
-**Actividad:** Actividad
+**Actividad:** Actividad 01
 **Estudiante:** Christian Isaac Dzul Canul
 **Programa:** Maestría en Inteligencia Artificial 🎓
 **Docente:** Dr. Víctor Uc Cetina

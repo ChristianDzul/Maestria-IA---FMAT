@@ -2,7 +2,7 @@
 
 **Materia:** Introducción a la Inteligencia Artificial
 **Unidad / Módulo:** Conceptos básicos de Inteligencia Artificial
-**Actividad:** Actividad
+**Actividad:** Actividad 01
 **Estudiante:** Christian Isaac Dzul Canul
 **Programa:** Maestría en Inteligencia Artificial 🎓
 **Docente:** Dr. Víctor Uc Cetina
