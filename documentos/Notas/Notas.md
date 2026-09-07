@@ -353,3 +353,25 @@ Es recomentable usar un batch gradient descent que evalue y actualice por ejempl
 - Neuronas:
 
 Es un modelo lineal 
+
+
+---
+
+> ### Fecha: `[04/09/2026]`
+
+####  📌 Notas y Hallazgos (Día 07):
+
+### Redes Neuronales - Backpropagation algorithm
+
+- Multilayer perceptron (MLP)
+- Reglas para medir los pesos, son:
+  - Propagacion
+  - Retropagacion
+
+Cada medida de error se le denomina con Delta, calculando el error de salida de una neurona tipo: 
+
+![alt text](image-33.png)
+
+Se sigue desplegando ya que no hay manera de saber o calcular el error de las redes ocultas:
+
+![alt text](image-34.png)
