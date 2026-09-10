@@ -25,21 +25,36 @@ El caso evaluado por default es la ruta **Arad → Bucharest**. Para esta activi
 
 | Algoritmo | Path | Depth | Cost | Expanded | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **1. BFS** *(Breadth-First Search)* |Oradea → Sibiu → Fagaras → Bucharest → Urziceni → Hirsova | 5 carreteras |644 Km | 13 nodos | success|
-| **2. UCS** *(Uniform-Cost Search)* |Oradea → Sibiu → Rimnicu Vilcea → Pitesti → Bucharest → Urziceni → Hirsova |6 carreteras |612 km |15 nodos |success |
-| **3. DFS** *(Depth-First Search)* |Oradea → Sibiu → Arad → Timisora → Lugoj → Mehadia → Drobeta → Craiova → Pitesti → Bucharest → Urziceni → Hirsova|11 carreteras |1207 km |12 nodos |success |
-| **4. DLS** *(Depth-Limited Search)* | <ul><li>Con el --limit = 2 no se encuentra ningun path, cut off.</li><li> Con el --limit = 6 se obtiene el path: Oradea → Sibiu → Fagaras → Bucharest → Urziceni → Hirsova</li></ul>|5 carreteras |644 km | 16 nodos | success |
-| **5. IDS** *(Iterative Deepening Search)* |Oradea → Sibiu → Fagaras → Bucharest → Urziceni → Hirsova |5 carreteras |644 km |36 nodos |success |
+| **1. GBFS** *(Greedy best-First Search)* |Oradea → Sibiu → Fagaras → Bucharest → Urziceni → Hirsova | 5 carreteras |644 Km | 5 nodos | success|
+| **2. A\*** *(A Star Search)* | Oradea → Sibiu → Rimnicu Vilcea → Pitesti → Bucharest → Urziceni → Hirsova |6 carreteras |612 km |9 nodos |success |
 
-### `1. Breadth First Search (BFS).`
+### `Calculo de heuristicas`
 
-Al ejecutar BFS, se puede observar desde los resultados que:
+Utilizando la pareja `Oradea → Hirsova`, se pudo calcular las heuristicas desde la ciudad inicial a destino, obteniendo los siguientes resultados:
 
-
-El path obtenido, se observa de la siguiente manera:
+![alt text](/actividades/Imagenes/Heuristics_result.png)
 
 
+### `1. Greedy Best-First Search (GBFS).`
 
+Al ejecutar el algoritmo de busqueda Greedy, se obtuvierons los siguientes resultados. Como el destino no es Bucharest, la heuristica recurre automáticamente a la distancia euclidiana sobre las coordenadas aproximadas del mapa, en vez de la tabla AIMA. Esto se confirma corriendo 02_heuristics.py --from-city Oradea --to Hirsova, visto es los resultados previamente mostrados.
+
+![alt text](/actividades/Imagenes/GBFS_result.png)
+
+El subgrafo obtenido se puede observar de la siguiente manera:
+
+![alt text](/actividades/Imagenes/GBFS_subgrafo.png)
+
+
+### `2. A Star Search (A*).`
+
+Al ejecutar el algoritmo de busqueda A*, se obtuvierons los siguientes resultados. Como en el caso previo haciendo uso del algoritmo Greedy, este tamnbien utiliza la distancia euclidiana.
+
+![alt text](/actividades/Imagenes/A_star_result.png)
+
+El subgrafo obtenido se puede observar de la siguiente manera:
+
+![alt text](/actividades/Imagenes/A_Star_subrafo.png)
 
 
 ---
@@ -47,6 +62,11 @@ El path obtenido, se observa de la siguiente manera:
 > ## 3. Conclusión
 
 
+Con los resultados obtenidos, se se puede concluir que A* encontró el camino más óptimo com 612 km. por el contrario, Greedy se desvió, este devolvió una ruta de 644 km, 32 km más cara, aunque con una carretera menos. Greedy solo compara la heuristica h(n) qué tan "cerca en línea recta" se ve cada ciudad y nunca considera cuánto ya costó llegar hasta ahí, así que sacrificó costo real a cambio de parecer más cercano a la meta en cada paso.
+
+Ahora bien, que h sea admisible solo garantiza que nunca sobreestima la distancia restante, es una propiedad necesaria para que A* sea óptimo, pero no le da ninguna garantía a Greedy, porque Greedy nunca usa g(n) en su decisión. El ejemplo concreto está en el propio recorrido: tras expandir Sibiu, la frontera tenía tanto Fagaras (h=249) como Rimnicu Vilcea (h=307); ambos algoritmos coincidieron y expandieron Fagaras primero (menor h). Pero al expandir Fagaras se genera Bucharest con h=136, siendo el valor más bajo visto hasta ese momento. Greedy salta inmediatamente a Bucharest porque tiene la h más chica de toda su frontera, sin notar que llegar ahí ya costó g=461 km. A* en cambio calcula `f = g + h` para ese mismo nodo Bucharest: f = 461 + 136 = 597, y como en su frontera todavía había nodos con f menor (Rimnicu Vilcea con f=538), A* pospone expandir esa rama y sigue explorando el camino vía Rimnicu Vilcea → Pitesti, que termina llegando a Bucharest con g=429 y f=565 más barato. 
+
+Finalmente, f no tiende a disminuir a lo largo de la ruta en A*, por ejemplo; los valores de f a lo largo del camino final fueron 460 → 495 → 538 → 543 → 565 → 592 → 612, ahi se puede observar como este va incrementando. Esto es consecuencia directa de que la heurística usada es consistente, la distancia euclidiana entre dos ciudades nunca puede ser mayor que el costo real de la carretera que las conecta (la línea recta es, por definición, la distancia más corta posible). Cuando h es consistente, f nunca puede bajar de un nodo a su hijo, sin importar si el destino es Hirsova (heurística euclidiana, como aquí) o Bucharest (donde se usaría la tabla AIMA, documentada también como consistente). Esta propiedad es justamente la que permite que A* declare óptimo un nodo en cuanto lo saca de la frontera, sin tener que revisarlo después.
 
 ---
 > ## 4. Criteria

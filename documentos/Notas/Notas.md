@@ -375,3 +375,4 @@ Cada medida de error se le denomina con Delta, calculando el error de salida de 
 Se sigue desplegando ya que no hay manera de saber o calcular el error de las redes ocultas:
 
 ![alt text](image-34.png)
+
