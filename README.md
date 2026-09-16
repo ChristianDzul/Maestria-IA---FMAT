@@ -1,4 +1,4 @@
-# Maestria-IA---FMAT
+# Maestria-IA - FMAT
 
 Repositorio generado para llevar registro de actividades, proyectos y documentación para la maestría de Inteligencia Artificial.
 
