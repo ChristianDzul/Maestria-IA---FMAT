@@ -26,19 +26,19 @@ Los resultados obtenidos en la ejecucion origianl fueron los siguientes:
 
 - Scatterplot (blobs):
 
-![alt text](/actividades/Imagenes/Scatterplot_original.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Scatterplot_original.png)
 
 - Diagrama de Voronoi (k=5)
 
-![alt text](/actividades/Imagenes/Voronoi_original.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Voronoi_original.png)
 
 - Curva de Inercia (codo)
 
-![alt text](/actividades/Imagenes/codo_original.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/codo_original.png)
 
 - Curva de silueta
 
-![alt text](/actividades/Imagenes/silueta_original.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/silueta_original.png)
 
 
 ## `Codigo Editado`
@@ -47,26 +47,26 @@ Los resultados obtenidos en la ejecucion origianl fueron los siguientes:
 
 - Scatterplot (blobs):
 
-![alt text](/actividades/Imagenes/Scatterplot_modificado.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Scatterplot_modificado.png)
 
 - Diagrama de Voronoi (k=5)
 
-![alt text](/actividades/Imagenes/Voronoi_modificado.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Voronoi_modificado.png)
 
 - Curva de Inercia (codo)
 
-![alt text](/actividades/Imagenes/Codo_modificado.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Codo_modificado.png)
 
 - Curva de silueta
 
-![alt text](/actividades/Imagenes/silueta_modificado.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/silueta_modificado.png)
 
 
 - Valores comparativos entre inercias del codigo original y el modificado:
 
-![alt text](/actividades/Imagenes/Kmeans_results.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Kmeans_results.png)
 
-Para mayor detalle, se puede ver los resultados en la ruta: [01 K-medias.ipynb](/actividades/07_Clustering_K_medias/Notebooks/01%20K-medias.ipynb)
+Para mayor detalle, se puede ver los resultados en la ruta: [01 K-medias.ipynb](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/07_Clustering_K_medias/Notebooks/01%20K-medias.ipynb)
 
 
 

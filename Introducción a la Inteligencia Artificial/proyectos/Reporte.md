@@ -119,4 +119,14 @@ se extraen con `pypdf`, es importante considerar que un PDF escaneado sin texto 
 
 - Pregunta fuera del dominio (abstained): ¿Cuál es la tasa de interés de las tarjetas de crédito de Banorte?
 
-![alt text](image.png)
+![Abstained](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Pregunta4_abstained.png)
+
+> Preguntas en /docs contra FastAPI
+
+- POST /ingest:
+
+![Post-Ingest](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Post_ingest.png)
+
+- POST /query:
+
+![Post-Query](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Post_query.png)

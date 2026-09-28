@@ -18,7 +18,7 @@ Elegir una ruta distinta de Arad → Bucharest, inspeccionar h(n), correr Greedy
 > ## 2. Desarollo
 El caso evaluado por default es la ruta **Arad → Bucharest**. Para esta actividad se fijara una nueva ruta quedando como `Oradea → Hirsova`, tomando como referencia el mapa de Romania (AIMA 3.2)  
 
-![alt text](/actividades/Imagenes/Romania_map.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/Romania_map.png)
 
 
 ### Tabla comparativa
@@ -32,29 +32,29 @@ El caso evaluado por default es la ruta **Arad → Bucharest**. Para esta activi
 
 Utilizando la pareja `Oradea → Hirsova`, se pudo calcular las heuristicas desde la ciudad inicial a destino, obteniendo los siguientes resultados:
 
-![alt text](/actividades/Imagenes/Heuristics_result.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/Heuristics_result.png)
 
 
 ### `1. Greedy Best-First Search (GBFS).`
 
 Al ejecutar el algoritmo de busqueda Greedy, se obtuvierons los siguientes resultados. Como el destino no es Bucharest, la heuristica recurre automáticamente a la distancia euclidiana sobre las coordenadas aproximadas del mapa, en vez de la tabla AIMA. Esto se confirma corriendo 02_heuristics.py --from-city Oradea --to Hirsova, visto es los resultados previamente mostrados.
 
-![alt text](/actividades/Imagenes/GBFS_result.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/GBFS_result.png)
 
 El subgrafo obtenido se puede observar de la siguiente manera:
 
-![alt text](/actividades/Imagenes/GBFS_subgrafo.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/GBFS_subgrafo.png)
 
 
 ### `2. A Star Search (A*).`
 
 Al ejecutar el algoritmo de busqueda A*, se obtuvierons los siguientes resultados. Como en el caso previo haciendo uso del algoritmo Greedy, este tamnbien utiliza la distancia euclidiana.
 
-![alt text](/actividades/Imagenes/A_star_result.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/A_star_result.png)
 
 El subgrafo obtenido se puede observar de la siguiente manera:
 
-![alt text](/actividades/Imagenes/A_Star_subrafo.png)
+![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/A_Star_subrafo.png)
 
 
 ---
