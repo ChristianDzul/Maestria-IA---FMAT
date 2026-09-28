@@ -1,5 +1,0 @@
-venv/
-.env
-chroma/
-__pycache__/
-RAG.zip
