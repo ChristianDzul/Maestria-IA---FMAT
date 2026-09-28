@@ -21,11 +21,11 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
    Para empezar, se generó una nueva cueva previo a hacer uso de los agentes. Este tiene el nombre `mi_cueva_4x4.yaml`. El mapa original se ve de esta manera:
 
-   ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/OriginalMap.png)
+   ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/OriginalMap.png)
 
    Ahora bien, para el nuevo mapa `mi_cueva_4x4.yaml`, tras realizar las modificaciones, termino luciendo:
 
-   ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/NewMap.png)
+   ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/NewMap.png)
 
    Y con los siguientes valores:
 
@@ -64,7 +64,7 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
          Los resultados que se obtuvieron fueron los siguientes:
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/Simple_reflex_result.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Simple_reflex_result.png)
 
          Se puede observar que si bien si se movio de su posicion inicial, pasando de (1,1) a (2,1), este quedó ciclado cambiando únicamente su dirección sin moverse de su posición y alcanzando el numero máximo de steps sin destrabasrse, esto debido a que no tiene la capacidad de recordar si el camino recorrido es seguro.
 
@@ -72,18 +72,18 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
          Los resultados que se obtuvieron fueron los siguientes:
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/model_based_result.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/model_based_result.png)
 
          Sin embargo, para ver qué pasa justo antes de quedarse trabado, bajé las iteraciones a 20. Ahí se nota que al principio el agente gira y avanza hacia el norte, llegando a (2,2), detecta el hedor del Wumpus y como no tiene manera de saber si seguir es seguro, se regresa a la casilla inicial (1,1) para probar otra ruta. Pero cuando se vuelve a topar con el hedor por el nuevo camino, por las propias limitaciones de este tipo de agente, termina quedándose rotando en lugar de arriesgarse a moverse a otra casilla
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/model_based_res2.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/model_based_res2.png)
 
 
       - Goal based agent:
 
          Los resultados que se obtuvieron fueron los siguientes:
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/goal_based_result.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/goal_based_result.png)
    
          Aquí pasa algo muy similar al `agente model-based`, pero por razones distintas. A diferencia del anterior, este sí mapea las rutas posibles y las evalúa según su nivel de seguridad o riesgo.
 
@@ -95,7 +95,7 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
          Los resultados que se obtuvieron fueron los siguientes:
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/Utility_based_result.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Utility_based_result.png)
 
          Este modelo sigue patrones similares al `agente goal-based` con la diferencia de que su arquitectura evalua el costo de los diferentes caminos y pasos a tomar, tomando en cuenta los valores de penalizacion o costo, y la probabilidad de que ocurra un evento (encontrarse con el wumpus, pit, u oro), esto con el fin de tomar el camino que considere más optimo tomando los riesgos necesarios. Es por ello que decide arriesgarse y muere.
 
@@ -104,7 +104,7 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
          Los resultados que se obtuvieron fueron los siguientes:
 
-         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial//actividades/Imagenes/Learning_agent_result.png)
+         ![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Learning_agent_result.png)
 
          A diferencia de los modelos anteriores, este usa las mejores caracteristicas de cada uno e implementa un sistema de recompensas y retroalimentacion para enseñar al agente cuando toma una opcion incorrecta (penaliza) y cuando una que es correcta (recomepensa). Usando cierto numero de iteraciones, este toma lo aprendido y lo implementa para resolver el problema. En este caso, se puede observar que con las 1500 iteraciones el agente consiguó identificar un camino para conseguir el oro y salir a salvo.
 ---
