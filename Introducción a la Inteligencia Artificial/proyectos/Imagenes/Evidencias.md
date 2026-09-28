@@ -1,1 +1,0 @@
-![Carga de documentos](carga_documentos.png)

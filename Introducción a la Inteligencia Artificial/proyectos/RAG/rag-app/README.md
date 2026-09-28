@@ -1,6 +1,6 @@
 # Sistema RAG Bancario — Sistema de preguntas y respuestas sobre documentación bancaria BBVA.
 
-Sistema **RAG** que responde preguntas sobre un corpus de documentación bancaria
+Sistema **RAG** responde preguntas sobre un corpus de documentación bancaria
 **anclando cada respuesta en la evidencia recuperada** y citando las fuentes.
 Si la pregunta no tiene respuesta en el corpus, el sistema **se abstiene** en
 lugar de inventar.
@@ -83,10 +83,50 @@ rag-app/
 └── ui/
     └── streamlit_app.py  # chat, carga de documentos, citas y scores
 ```
+---
+
+## Corpus
+
+- **Dominio:** documentación operativa y de gobierno de un banco. Incluye, entre
+  otros: modelo operativo, gobierno y estructura organizacional, captación y
+  clientes, catálogo de servicios críticos y SLA, Command Center, y
+  procedimientos de escalación y guardias, más una ficha institucional.
+- **Tamaño:** 22 documentos, ~16,981 palabras, 92 chunks.
+- **Formatos:** `.txt`, `.md` y `.pdf` (los PDF escaneados sin texto requieren
+  OCR y no se indexan).
+- Incluye al menos **una pregunta fuera de dominio** para probar la abstención
+  (ej.: "¿Cuál es la tasa de interés de las tarjetas de crédito de Banorte?").
 
 ---
 
-## Los módulos, uno por uno
+## Regla de abstención
+
+El sistema se abstiene cuando la evidencia recuperada no cubre la pregunta,
+en dos capas:
+
+1. **Umbral sobre el mejor chunk (`MIN_SCORE = 0.3`):** si ni el chunk más
+   parecido supera el umbral, el sistema se abstiene **sin llamar a Gemini**.
+   Si el mejor pasa, se incluyen todos los `top-k` chunks en el contexto.
+2. **Instrucción al modelo:** el prompt le indica a Gemini que, si el contexto
+   no contiene la respuesta, lo diga en lugar de inventar.
+
+> Nota: ChromaDB devuelve **distancias** (menor = más parecido). El `score`
+> mostrado en la UI se deriva como `score = 1 - distancia`.
+
+---
+
+## Robustez
+
+- **Reintentos con espera creciente** en la llamada a Gemini: los errores
+  transitorios (503 / alta demanda) se reintentan automáticamente antes de
+  reportar un fallo.
+- **Timeouts** en el cliente HTTP de Streamlit (`/query` con margen amplio para
+  cubrir los reintentos).
+- Si un modelo está muy saturado, se puede **cambiar de modelo** desde la UI.
+
+---
+
+## Módulos
 
 ### `chunk.py` — partición del texto
 Divide un texto largo en fragmentos ("chunks") de tamaño configurable con
@@ -188,56 +228,4 @@ la barra de escritura para indexarlos, y haz tu primera pregunta.
 
 ---
 
-## Corpus
 
-- **Dominio:** documentación operativa y de gobierno de un banco. Incluye, entre
-  otros: modelo operativo, gobierno y estructura organizacional, captación y
-  clientes, catálogo de servicios críticos y SLA, Command Center, y
-  procedimientos de escalación y guardias, más una ficha institucional.
-- **Tamaño:** 22 documentos y 16981 total de palabras
-- **Formatos:** `.txt`, `.md` y `.pdf` (los PDF escaneados sin texto requieren
-  OCR y no se indexan).
-- Incluye al menos **una pregunta fuera de dominio** para probar la abstención
-  (ej.: ¿Cual es el proceso para preparar carne al pastor?¿Cuales son los mejores modelos de telefonos en 2026?).
-
----
-
-## Regla de abstención
-
-El sistema se abstiene cuando la evidencia recuperada no cubre la pregunta,
-en dos capas:
-
-1. **Umbral sobre el mejor chunk (`MIN_SCORE = 0.3`):** si ni el chunk más
-   parecido supera el umbral, el sistema se abstiene **sin llamar a Gemini**.
-   Si el mejor pasa, se incluyen todos los `top-k` chunks en el contexto.
-2. **Instrucción al modelo:** el prompt le indica a Gemini que, si el contexto
-   no contiene la respuesta, lo diga en lugar de inventar.
-
-> Nota: ChromaDB devuelve **distancias** (menor = más parecido). El `score`
-> mostrado en la UI se deriva como `score = 1 - distancia`.
-
----
-
-## Robustez
-
-- **Reintentos con espera creciente** en la llamada a Gemini: los errores
-  transitorios (503 / alta demanda) se reintentan automáticamente antes de
-  reportar un fallo.
-- **Timeouts** en el cliente HTTP de Streamlit (`/query` con margen amplio para
-  cubrir los reintentos).
-- Si un modelo está muy saturado, se puede **cambiar de modelo** desde la UI.
-
-<!-- --- -->
-
-<!-- ## Estado del proyecto
-
-- [x] Estructura, entorno virtual y `requirements.txt`
-- [x] `.env.example` y `.gitignore`
-- [x] `GET /health`, `POST /ingest`, `POST /query`
-- [x] `chunk.py`, `embed.py`, `store.py` (validados de forma aislada)
-- [x] `generate.py` (Gemini + abstención + reintentos)
-- [x] `streamlit_app.py` profesional (chat, subida en barra, historial, selector de modelo, estado de API)
-- [x] Soporte de PDF (extracción con `pypdf`)
-- [x] Persistencia verificada (Chroma sobrevive a reinicios)
-- [ ] Corpus final confirmado (≥ 5 documentos) — [CONFIRMAR conteo]
-- [ ] Evidencias (capturas) y reporte de una página -->
