@@ -21,7 +21,7 @@ Crear una nueva configuración modificando la posición del Wumpus y de los pits
 
    Para empezar, se generó una nueva cueva previo a hacer uso de los agentes. Este tiene el nombre `mi_cueva_4x4.yaml`. El mapa original se ve de esta manera:
 
-   ![alt text](../../../Imagenes/OriginalMap.png)
+   ![alt text](../../Imagenes/OriginalMap.png)
 
    Ahora bien, para el nuevo mapa `mi_cueva_4x4.yaml`, tras realizar las modificaciones, termino luciendo:
 
