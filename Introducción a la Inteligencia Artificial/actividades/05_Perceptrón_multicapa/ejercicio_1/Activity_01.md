@@ -24,17 +24,17 @@ Correr ambas notebooks en Google Colab con la arquitectura original, agregar dos
 
 Es importante considerar, la primera ejecución se constituye con una estructura o topologia de 4 entradas, una capa oculta de 3 neuronas, y 3 neuronas de salida. Para ello se hace uso de la activacion sigmoide y calculo del error mediante MSE. Los resultados obtenidos fueron:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/MLP_result.png)
+![alt text](../../Imagenes/MLP_result.png)
 
 
 #### **Segunda ejecución (Profunda)**
 
 Se conservaron las mismos métodos, con la excepción de que se añadieron 2 capas más, y se ajustaron las funciones para la inicialización de pesos en las capas, calculo de error, propagación y retropropagación de los errores.
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/MLP_prof_result.png)
+![alt text](../../Imagenes/MLP_prof_result.png)
 
 
-Para mayor detalle, se puede ver los resultados en la ruta: [04_Multilayer_perceptron_result.ipynb](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/05_Perceptrón_multicapa/Notebooks/04_Multilayer_perceptron_result.ipynb)
+Para mayor detalle, se puede ver los resultados en la ruta: [04_Multilayer_perceptron_result.ipynb](../../05_Perceptrón_multicapa/Notebooks/04_Multilayer_perceptron_result.ipynb)
 
 ---
 
@@ -46,11 +46,11 @@ Es importante considerar, la primera ejecución se constituye con una estructura
 
 Model summary:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Model_summ_1.png)
+![alt text](../../Imagenes/Model_summ_1.png)
 
 Results (loss y curve loss):
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/KMLP_result_1.png)
+![alt text](../../Imagenes/KMLP_result_1.png)
 
 
 #### **Segunda ejecución (Profunda)**
@@ -59,13 +59,13 @@ Se conservaron las mismos métodos, con la excepción de que se añadieron 2 cap
 
 Model summary:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Model_summ_2.png)
+![alt text](../../Imagenes/Model_summ_2.png)
 
 Results (loss y curve loss):
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/KMLP_result_2.png)
+![alt text](../../Imagenes/KMLP_result_2.png)
 
-Para mayor detalle, se puede ver los resultados en la ruta: [05 Keras - multilayer perceptron - iris.ipynb](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/05_Perceptrón_multicapa/Notebooks/05_Keras_multilayer_perceptron_result.ipynb)
+Para mayor detalle, se puede ver los resultados en la ruta: [05 Keras - multilayer perceptron - iris.ipynb](../../05_Perceptrón_multicapa/Notebooks/05_Keras_multilayer_perceptron_result.ipynb)
 
 
 ---

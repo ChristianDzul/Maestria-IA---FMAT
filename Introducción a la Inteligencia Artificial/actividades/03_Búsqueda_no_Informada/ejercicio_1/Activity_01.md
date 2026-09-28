@@ -18,7 +18,7 @@ Elegir una ruta distinta de Arad → Bucharest, correr BFS, UCS, DFS, DLS e IDS,
 > ## 2. Desarollo
 El caso evaluado por default es la ruta **Arad → Bucharest**. Para esta actividad se fijara una nueva ruta quedando como `Oradea → Hirsova`, tomando como referencia el mapa de Romania (AIMA 3.2)  
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/Romania_map.png)
+![alt text](../../Imagenes/Romania_map.png)
 
 
 ### Tabla comparativa
@@ -37,58 +37,58 @@ Al ejecutar BFS, se puede observar desde los resultados que:
 
 <!-- <img src="/actividades/Imagenes/BFS_result.png" width="250" height="250"> -->
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/BFS_result.png)
+![alt text](../../Imagenes/BFS_result.png)
 
 El path obtenido, se observa de la siguiente manera:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/BFS_Path.png)
+![alt text](../../Imagenes/BFS_Path.png)
 
 ### `2. Uniform Cost Search (UCS).`
 
 Al ejecutar UCS, se puede observar desde los resultados que:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/UCS_result.png)
+![alt text](../../Imagenes/UCS_result.png)
 
 El path obtenido, se observa de la siguiente manera:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/UCS_path.png)
+![alt text](../../Imagenes/UCS_path.png)
 
 
 ### `3. Depth First Search (DFS).`
 
 Al ejecutar DFS, se puede observar desde los resultados que:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/DFS_result.png)
+![alt text](../../Imagenes/DFS_result.png)
 
 El path obtenido, se observa de la siguiente manera:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/DFS_path.png)
+![alt text](../../Imagenes/DFS_path.png)
 
 
 ### `4. Depth Limited Search (DLS).`
 
 Al ejecutar DLS con un limite igual a 2, se puede observar desde los resultados que:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/DLS_result_1.png)
+![alt text](../../Imagenes/DLS_result_1.png)
 
 En cambio, cuando se establece un limite mayor, tal como es en este caso con **--limit 6**, entonces se obtiene lo siguiente:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/DLS_result_2.png)
+![alt text](../../Imagenes/DLS_result_2.png)
 
 El path obtenido, se observa de la siguiente manera (--limit = 6):
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/DLS_path.png)
+![alt text](../../Imagenes/DLS_path.png)
 
 
 ### `5. Iterative Deepening Search (IDS).`
 
 Al ejecutar IDS, se puede observar desde los resultados que:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/IDS_result.png)
+![alt text](../../Imagenes/IDS_result.png)
 
 El path obtenido, se observa de la siguiente manera:
 
-![alt text](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/actividades/Imagenes/IDS_path.png)
+![alt text](../../Imagenes/IDS_path.png)
 
 ---
 

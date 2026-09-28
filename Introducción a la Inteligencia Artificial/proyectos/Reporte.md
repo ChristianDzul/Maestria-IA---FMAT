@@ -96,37 +96,37 @@ se extraen con `pypdf`, es importante considerar que un PDF escaneado sin texto 
 
 >Carga e indexamiento del corpus:
 
-![Carga de documentos](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/carga_documentos.png)
+![Carga de documentos](../proyectos/Imagenes/carga_documentos.png)
 
-![DocsIndexados](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/IndexadoCompleto.png)
+![DocsIndexados](../proyectos/Imagenes/IndexadoCompleto.png)
 
 >Streamlit (preguntas dentro del dominio con citas y scores)
 
 - Pregunta 1: ¿Cuales son las funciones del Command Center?
 
-![CMMC](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Pregunta1.png)
+![CMMC](../proyectos/Imagenes/Pregunta1.png)
 
 - Pregunta 2: ¿Qué es un major incident?
 
-![IM](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Pregunta2.png)
+![IM](../proyectos/Imagenes/Pregunta2.png)
 
 - Pregunta 3: ¿Qué es lo que hace un Incident Manager?
 
-![IncManager](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Pregunta3.png)
+![IncManager](../proyectos/Imagenes/Pregunta3.png)
 
 
 >Streamlit (preguntas fuera del dominio con citas y scores)
 
 - Pregunta fuera del dominio (abstained): ¿Cuál es la tasa de interés de las tarjetas de crédito de Banorte?
 
-![Abstained](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Pregunta4_abstained.png)
+![Abstained](../proyectos/Imagenes/Pregunta4_abstained.png)
 
 > Preguntas en /docs contra FastAPI
 
 - POST /ingest:
 
-![Post-Ingest](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Post_ingest.png)
+![Post-Ingest](../proyectos/Imagenes/Post_ingest.png)
 
 - POST /query:
 
-![Post-Query](/Maestria-IA---FMAT/Introducción%20a%20la%20Inteligencia%20Artificial/proyectos/Imagenes/Post_query.png)
+![Post-Query](../proyectos/Imagenes/Post_query.png)
