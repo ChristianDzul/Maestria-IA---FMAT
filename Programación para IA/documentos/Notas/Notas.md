@@ -28,3 +28,12 @@ tooling para analisis estatico (mypy):
 ![alt text](image-2.png)
 
 pydanic: biblioteca de validacion de datos bados en anotaciones de tipo y manejo de errores
+
+
+> Notas generales:
+
+
+Pandas:
+
+Con pandas, se pueden crear dataframes, que son tablas a partir de otras tablas tomando informacion en referencia a este.
+
