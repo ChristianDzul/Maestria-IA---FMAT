@@ -1,11 +1,11 @@
-# Course Catalog · catálogo de cursos con MCP
+# Sesión 4: Organización y reproducibilidad con uv y un servidor MCP local (Course Catalog)
 
-**Unidad 1 · Sesión 4 — Organización y reproducibilidad con `uv` y un servidor MCP local.**
-
-Una pequeña aplicación que busca cursos en un catálogo JSON, primero como función
-de consola (`main.py`) y luego como **herramienta MCP** (`server.py` + `client.py`).
-El objetivo de la práctica es trabajar módulos, dependencias, logging y
-reproducción del entorno con `uv`.
+- **Unidad 1 · Sesión 4 — Organización y reproducibilidad con `uv` y un servidor MCP local.**
+- **Materia:** Programación para IA 
+- **Estudiante:** Christian Isaac Dzul Canul
+- **Programa:** Maestría en Inteligencia Artificial 🎓
+- **Docente:** Oscar Raúl Navarrete Parra
+- **Fecha:** `10/10/2026`
 
 ---
 
@@ -54,7 +54,7 @@ uv run --locked python -m pytest
 | `pyproject.toml`, `uv.lock`, `.python-version` | Proyecto, versiones fijadas e intérprete. |
 | `Makefile` | Recetas de calidad y ejecución. |
 
----
+<!-- ---
 
 ## Reproducibilidad
 
@@ -69,7 +69,7 @@ Comprobación desde cero:
 rm -rf .venv                 # el entorno se regenera
 uv sync --locked
 uv run --locked python client.py python
-```
+``` -->
 
 ---
 
@@ -228,7 +228,3 @@ $ uv run --locked python -m pytest
 ......                                                                   [100%]
 6 passed in 6.79s
 ```
-
-Las 6 pruebas son las existentes (5 de `test_catalog.py` + 1 de `test_mcp.py`,
-que arranca un servidor MCP real). `make check` reúne lint, formato, tipos y
-pruebas; `.PHONY` evita confundir las tareas con archivos.
