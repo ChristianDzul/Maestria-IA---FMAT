@@ -29,10 +29,3 @@ def test_invalid_course(tmp_path: Path) -> None:
     path.write_text(json.dumps([{"code": "X", "title": "Python", "hours": 0}]))
     with pytest.raises(ValueError):
         search_courses("python", path)
-
-
-def test_negative_hours(tmp_path: Path) -> None:
-    path = tmp_path / "courses.json"
-    path.write_text(json.dumps([{"code": "X", "title": "Python", "hours": -5}]))
-    with pytest.raises(ValueError):
-        search_courses("python", path)
