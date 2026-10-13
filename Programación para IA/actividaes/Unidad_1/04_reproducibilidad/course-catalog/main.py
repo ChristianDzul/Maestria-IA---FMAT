@@ -1,18 +1,52 @@
-#Section 3:
+"""Query the catalog directly from the terminal."""
 
-from catalog.search import search_courses
+import argparse
+import json
+import logging
+from pathlib import Path
+
+from catalog.logging_config import configure_logging
+from catalog.search import DEFAULT_CATALOG, search_courses
 
 
-def main() -> None:
-    for course in search_courses("python"):
-        print(course.model_dump_json())
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Search the course catalog")
+    parser.add_argument("query")
+    parser.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
+    parser.add_argument(
+        "--log-level", choices=["DEBUG", "INFO", "WARNING", "ERROR"], default="INFO"
+    )
+    parser.add_argument("--log-file", type=Path)
+    args = parser.parse_args()
+    configure_logging(args.log_level, args.log_file)
+    try:
+        courses = search_courses(args.query, args.catalog)
+    except (OSError, ValueError):
+        logging.getLogger(__name__).exception("Catalog search failed")
+        return 1
+    print(json.dumps([course.model_dump() for course in courses], indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
 
 
-#Section 2:
+# #Section 3:
+
+# from catalog.search import search_courses
+
+
+# def main() -> None:
+#     for course in search_courses("python"):
+#         print(course.model_dump_json())
+
+
+# if __name__ == "__main__":
+#     main()
+
+
+# Section 2:
 
 # def search_courses(query: str) -> list[str]:
 #     titles = ["Python foundations", "Python for data analysis", "Machine learning introduction"]
@@ -30,7 +64,7 @@ if __name__ == "__main__":
 # if __name__ == "__main__":
 #     main()
 
-#---Main original -----
+# ---Main original -----
 # def main():
 #     print("Hello from course-catalog!")
 
