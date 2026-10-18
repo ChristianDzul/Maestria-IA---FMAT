@@ -109,3 +109,14 @@ def test_missing_dataset_does_not_create_output(tmp_path, monkeypatch):
     )
     assert app.main() == 1
     assert not output.exists()
+
+
+# Prueba para verificar que label_summary calcula correctamente las proporciones de clases
+def test_label_summary_reports_proportions():
+    result = label_summary(
+        torch.tensor([0, 0, 2, 2, 2]), ["class_a", "class_b", "class_c"]
+    )
+    assert [row["count"] for row in result] == [2, 0, 3]
+    proportions = [row["proportion"] for row in result]
+    assert proportions == pytest.approx([0.4, 0.0, 0.6])
+    assert sum(proportions) == pytest.approx(1.0)

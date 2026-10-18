@@ -65,3 +65,10 @@ def numerical_arrays(prepared: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
     if not np.isfinite(features).all():
         raise ValueError("Numerical features must be finite")
     return features, labels
+
+def missing_age_by_class(prepared: pd.DataFrame) -> pd.DataFrame:
+    """Report counts and proportions of missing ages for each class."""
+    return prepared.groupby("Pclass", as_index=False, dropna=False).agg(
+        passengers=("age_missing", "size"),
+        missing_age_rate=("age_missing", "mean"),
+    )

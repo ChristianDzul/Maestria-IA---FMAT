@@ -36,8 +36,8 @@ def collect_samples(
 
 def label_summary(
     labels: torch.Tensor, class_names: list[str]
-) -> list[dict[str, int | str]]:
-    """Count each class, including classes absent from the selected samples."""
+) -> list[dict[str, int | str | float]]:
+    """Count each class and its proportion, including absent classes."""
     if labels.ndim != 1 or labels.numel() == 0:
         raise ValueError("Expected a nonempty label vector")
     if labels.dtype != torch.int64:
@@ -45,7 +45,13 @@ def label_summary(
     if not class_names or (labels < 0).any() or (labels >= len(class_names)).any():
         raise ValueError("Labels must refer to an existing class")
     counts = torch.bincount(labels, minlength=len(class_names))
+    total = int(counts.sum())
     return [
-        {"class_id": index, "class_name": name, "count": int(counts[index])}
+        {
+            "class_id": index,
+            "class_name": name,
+            "count": int(counts[index]),
+            "proportion": int(counts[index]) / total,
+        }
         for index, name in enumerate(class_names)
     ]

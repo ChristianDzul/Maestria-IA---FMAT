@@ -2,10 +2,15 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from titanic.analysis import numerical_arrays, prepare_passengers, survival_by_group
+from titanic.analysis import (
+    missing_age_by_class,
+    numerical_arrays,
+    prepare_passengers,
+    survival_by_group,
+)
 
 
-@pytest.fixture
+@pytest.fixture #su funcion es devolver un dataframe pequeño para testear las funciones, y la funcion del decorador @pytest.fixture hace que la funcion small_table se ejecute antes de cada test y devuelva el dataframe
 def small_table() -> pd.DataFrame:
     return pd.DataFrame(
         {
@@ -21,6 +26,32 @@ def small_table() -> pd.DataFrame:
         }
     )
 
+#Datos propios para testear la función missing_age_by_class
+@pytest.fixture
+def test_missing_age() -> pd.DataFrame:
+    return pd.DataFrame(
+        {
+            "PassengerId": [1, 2, 3, 4],
+            "Survived": [1, 0, 1, 0],
+            "Pclass": [1, 1, 3, 3],
+            "Sex": ["female", "male", "female", "male"],
+            "Age": [40.0, np.nan, np.nan, np.nan],
+            "SibSp": [0, 0, 0, 0],
+            "Parch": [0, 0, 0, 0],
+            "Fare": [80.0, 70.0, 8.0, 7.0],
+            "Embarked": ["C", "C", "S", "S"],
+        }
+    )
+    
+    
+#Comprobacion
+
+def test_missing_age_by_class(test_missing_age: pd.DataFrame):
+    summary = missing_age_by_class(prepare_passengers(test_missing_age))
+    assert summary["passengers"].sum() == len(test_missing_age)
+    assert summary["missing_age_rate"].between(0.0, 1.0).all()
+    assert summary.loc[summary["Pclass"] == 1, "missing_age_rate"].item() == 0.5
+    assert summary.loc[summary["Pclass"] == 3, "missing_age_rate"].item() == 1.0
 
 def test_prepare_keeps_input_and_records_age_imputation(small_table: pd.DataFrame):
     before = small_table.copy(deep=True)
