@@ -1,14 +1,11 @@
-"""Estadísticas de las valoraciones (ratings) de un producto, con PyTorch.
-
-Describe SOLO las reseñas seleccionadas de la muestra, no todas las de Amazon.
-Reutilizado por analyze_product y compare_products en server.py.
+"""Estadísticas de las valoraciones (ratings) de un producto.
 """
 
 from dataclasses import dataclass
 
 import torch
 
-# Las cinco estrellas posibles, en orden. Las usamos para conteos y proporciones.
+# Las cinco estrellas posibles, en orden. Para usar en conteos y proporciones.
 STARS: tuple[int, int, int, int, int] = (1, 2, 3, 4, 5)
 
 
@@ -40,25 +37,23 @@ def summarize(ratings: list[float]) -> Summary:
     """
     review_count = len(ratings)
 
-    # TODO (1): conteo por estrella.
-    #   counts[s] = cuántos ratings son iguales a s, para cada s en STARS.
-    #   Pista: counts = {s: 0 for s in STARS}; luego recorre ratings y suma,
-    #   o usa ratings.count(float(s)). Deben ser ints de Python.
-    counts: dict[int, int] = ...  # TODO
-
-    # TODO (2): proporción por estrella.
-    #   Si review_count > 0: proportions[s] = counts[s] / review_count.
-    #   Si no hay reseñas: proportions[s] = 0.0 para cada s.
-    proportions: dict[int, float] = ...  # TODO
-
-    # TODO (3): media y mediana con PyTorch.
-    #   - Si no hay ratings: mean = None y median = None.
-    #   - Si hay: crea un tensor float: t = torch.tensor(ratings, dtype=torch.float32)
-    #       mean   = float(t.mean())
-    #       median = float(t.quantile(0.5))   # 0.5 = mediana (promedia los dos centrales)
-    #   Usamos quantile(0.5) para que coincida con la mediana de pandas/numpy.
-    mean: float | None = ...  # TODO
-    median: float | None = ...  # TODO
+    counts = {s: 0 for s in STARS}
+    for rating in ratings:
+        if rating in STARS:
+            counts[int(rating)] += 1
+            
+    if review_count > 0:
+        proportions = {s: counts[s] / review_count for s in STARS}
+    else:
+        proportions = {s: 0.0 for s in STARS}
+        
+    if review_count > 0:
+        t = torch.tensor(ratings, dtype=torch.float32)
+        mean = float(t.mean())
+        median = float(t.quantile(0.5))
+    else:
+        mean = None
+        median = None
 
     return Summary(
         review_count=review_count,

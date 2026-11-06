@@ -141,4 +141,4 @@ Notas generales:
 - Familias de seleccion
 ![alt text](image-15.png)
 
-- FIltros.
+- Datos topados: analizar con respecto al performance del modelo con respecto a conservar los datos topados.

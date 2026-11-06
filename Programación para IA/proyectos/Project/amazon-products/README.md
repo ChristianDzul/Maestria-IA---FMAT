@@ -23,6 +23,9 @@ buscamos los productos más parecidos por **similitud coseno**.
   - [Sección 2 · Configuración (`support/settings.py`)](#sección-2--configuración-supportsettingspy)
   - [Sección 3 · Lectura de datos (`support/data.py`)](#sección-3--lectura-de-datos-supportdatapy)
   - [Sección 4 · Embeddings (`support/encoder.py`)](#sección-4--embeddings-supportencoderpy)
+  - [Sección 5A · Estadísticas (`support/stats.py`)](#sección-5a--estadísticas-supportstatspy)
+  - [Sección 5B · Servidor y herramientas (`server.py`)](#sección-5b--servidor-y-herramientas-serverpy)
+  - [Sección 6 · Cliente y demo HTTP (`client.py`, `main.py`)](#sección-6--cliente-y-demo-http-clientpy-mainpy)
 - [Cómo recrearlo desde cero](#cómo-recrearlo-desde-cero)
 - [Ejecución](#ejecución)
 - [Verificación de tipos](#verificación-de-tipos)
@@ -98,7 +101,27 @@ amazon-products/
 
 ## Las tres herramientas MCP
 
-_(Se documentarán en detalle en la Sección 5.)_
+Todas devuelven tipos serializables de Python (dicts, listas, números, `None`).
+
+### `search_products(query, top_k=5)`
+Busca por similitud coseno. Devuelve una **lista** (orden descendente) de:
+`product_id`, `title`, `similarity` (float), `review_count` (nº de reseñas
+seleccionadas del producto).
+- `query` en blanco → `ToolError`.
+- `top_k` fuera de `1..20` → `ToolError`.
+
+### `analyze_product(product_id)`
+Resume las valoraciones de un producto. Devuelve: `product_id`, `review_count`,
+`counts` (por estrella), `proportions`, `mean`, `median`.
+- `product_id` en blanco → `ToolError`.
+- Producto **desconocido** → `review_count=0`, conteos/proporciones en 0,
+  `mean`/`median` = `null` (no es error).
+
+### `compare_products(product_ids)`
+Compara ≥2 productos distintos. Devuelve: `reference` (el primer id), `products`
+(resumen de cada uno) y `mean_differences` (diferencia de media respecto al
+primero; `null` si alguna media falta).
+- Menos de 2 ids, ids repetidos o alguno en blanco → `ToolError`.
 
 ## Explicación por sección
 
@@ -286,6 +309,104 @@ for s, i in zip(*torch.topk(scores, 3)):
 uv run mypy --strict support/encoder.py
 ```
 
+### Sección 5A · Estadísticas (`support/stats.py`)
+
+Calcula el resumen de valoraciones de un producto con **PyTorch**. Describe **solo
+las reseñas seleccionadas** de la muestra, no todas las de Amazon.
+
+- `data.ratings_by_product(records)` → dict `product_id → [ratings]` (agrupa las
+  valoraciones; también sirve para contar reseñas por producto en la búsqueda).
+- `stats.summarize(ratings)` → `Summary` con:
+  - `review_count`: nº de reseñas.
+  - `counts`: conteo por estrella `{1..5}`.
+  - `proportions`: proporción por estrella (suman ~1 si hay reseñas).
+  - `mean`, `median`: media y mediana (`None` si no hay reseñas).
+
+```python
+t = torch.tensor(ratings, dtype=torch.float32)
+mean   = float(t.mean())
+median = float(t.quantile(0.5))   # mediana estilo pandas/numpy (promedia los centrales)
+```
+
+Decisiones:
+
+- **`quantile(0.5)` en vez de `torch.median`**: `torch.median([4,5])` da `4` (el
+  menor); `quantile(0.5)` da `4.5` (los promedia), que es la mediana convencional.
+- **Producto desconocido / sin reseñas**: `review_count=0`, conteos y proporciones
+  en 0, `mean`/`median` = `None` (lo exige el enunciado).
+- **Valores de Python**: se convierte con `int()`/`float()` para que sean
+  serializables por MCP (un tensor no se puede mandar por JSON).
+
+### Sección 5B · Servidor y herramientas (`server.py`)
+
+Servidor **MCP por Streamable HTTP** que registra las tres herramientas. Al
+importarse (antes del bloque `if __name__`) **prepara todo una sola vez** y lo
+deja en variables de módulo:
+
+```python
+_settings = load_settings(CONFIG_PATH)
+_records, _products = load(DATA_DIR)
+_texts, _review_ids, _review_product_ids = searchable_reviews(_records)
+_model = load_model(_settings)
+_index = build_index(_model, _settings, _products, _texts, _review_product_ids)
+_ratings = ratings_by_product(_records)
+
+mcp = MCPServer("Amazon reviews")
+```
+
+Así el modelo y la matriz `(600, 384)` quedan en memoria; cada llamada a una
+herramienta solo codifica la consulta (barato). Las herramientas se registran con
+`@mcp.tool()` y **usan los módulos de `support/`** (ver [las tres
+herramientas](#las-tres-herramientas-mcp)).
+
+Núcleo de la búsqueda (como en la notebook de PyTorch §6):
+
+```python
+query_vector = _index.encode_query(query)
+scores = _index.matrix @ query_vector          # (600,)
+top = torch.topk(scores, min(top_k, len(_index.product_ids)))
+```
+
+Decisiones:
+
+- **`ToolError`** (no `ValueError`) para entradas inválidas: el servidor responde
+  con `is_error=True` sin cerrar la conexión, de modo que una llamada inválida no
+  impide una válida posterior.
+- **`min(top_k, n)`**: `torch.topk` fallaría si se piden más resultados que
+  candidatos.
+- **`_summary_payload`**: convierte un `Summary` en dict, reutilizado por
+  `analyze_product` y `compare_products`.
+
+El servidor arranca con:
+
+```python
+mcp.run(transport="streamable-http", host="127.0.0.1", port=8000)
+```
+
+### Sección 6 · Cliente y demo HTTP (`client.py`, `main.py`)
+
+Código provisto en `MCP_HTTP.md`. `client.py` define `demonstrate()`, que abre una
+conexión al servidor, **descubre** las herramientas con `list_tools()` e invoca una
+batería de llamadas (válidas e inválidas) con `call_tool(name, arguments)`.
+`main.py` solo ejecuta ese cliente con `asyncio.run(demonstrate())`.
+
+La demo incluye a propósito una llamada con `top_k=0` (que debe dar error) seguida
+de otra válida: comprueba que **el servidor se recupera** y responde la siguiente
+en la misma conexión.
+
+Se ejecutan en **dos terminales** (ambas desde `amazon-products/`):
+
+```bash
+# Terminal 1 — servidor (prepara datos, modelo y embeddings al arrancar)
+uv run --locked python server.py
+
+# Terminal 2 — cliente de demostración
+uv run --locked python main.py
+```
+
+Si la conexión falla: confirma que el servidor sigue abierto en el puerto 8000 y
+que la URL termina en `/mcp`.
+
 ## Cómo recrearlo desde cero
 
 ```bash
@@ -307,15 +428,65 @@ _(Los comandos de ejecución y verificación se completan en secciones siguiente
 
 ## Ejecución
 
-_(Se completará en la Sección 6.)_
+Desde `amazon-products/`, en **dos terminales**:
+
+```bash
+# Terminal 1 — servidor
+uv run --locked python server.py        # http://127.0.0.1:8000/mcp
+
+# Terminal 2 — cliente de demostración
+uv run --locked python main.py
+```
+
+La primera vez, `server.py` descarga el modelo (~90 MB) y prepara los embeddings;
+las siguientes usan la caché. No se guardan vectores en disco: se regeneran en
+memoria al arrancar, así que **no hay nada que regenerar manualmente**.
 
 ## Verificación de tipos
 
-_(Se completará en la Sección 7.)_
+```bash
+uv run --locked mypy --strict server.py client.py main.py support
+```
+
+Debe terminar con `Success: no issues found in 8 source files`.
+
+Para comprobar la reproducibilidad del entorno desde una copia sin `.venv`:
+
+```bash
+uv sync --locked
+```
 
 ## Ejemplos de consultas e interpretación
 
-_(Se completará en la Sección 7.)_
+**Consulta 1 — `"A portable waterproof Bluetooth speaker"` (`top_k=3`)**
+
+| Similitud | Producto | Reseñas |
+|---:|---|---:|
+| 0.794 | Altec Lansing Mini H2O — Waterproof Bluetooth Speaker, IP67 | 11 |
+| 0.790 | EDUPLINK Waterproof Portable Bluetooth Speaker 20W | 13 |
+| 0.758 | Bose SoundLink Micro — Portable Bluetooth Speaker (Waterproof) | 27 |
+
+*Interpretación:* los tres resultados son altavoces Bluetooth portátiles
+resistentes al agua; la búsqueda captó bien el sentido de la consulta (no solo
+palabras sueltas). La similitud (~0.79) es alta pero **no es una probabilidad ni
+una medida de calidad**: solo indica cercanía semántica entre la consulta y la
+representación del producto.
+
+**Consulta 2 — `"Comfortable headphones with good sound"` (`top_k=2`)**
+
+| Similitud | Producto | Reseñas |
+|---:|---|---:|
+| 0.729 | Sony MDR7506 Professional Large Diaphragm Headphone | 30 |
+| 0.717 | OneOdio Over Ear Headphone, Wired Bass Headsets 50mm | 30 |
+
+*Interpretación:* el modelo distingue auriculares de altavoces y recupera
+over-ear/profesionales, coherentes con "comfortable" y "good sound".
+
+**Limitación (aplica a ambas):** el modelo `all-MiniLM-L6-v2` está orientado al
+**inglés** y trunca textos largos (256 tokens), así que consultas en otro idioma o
+muy largas pierden calidad. Además, el `review_count` está acotado a 5–30 por la
+selección: **no refleja la popularidad real** del producto en Amazon, y la media de
+estrellas describe solo las reseñas de esta muestra, no todas las valoraciones.
 
 ## Limitaciones y alcance de los datos
 
